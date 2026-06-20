@@ -15,7 +15,7 @@ public class MediaService {
 
     private final S3Presigner s3Presigner;
 
-    @Value("${aws.s3.bucket}")
+    @Value("${spring.aws.s3.bucket}")
     private String bucketName;
 
     public MediaService(S3Presigner s3Presigner) {
