@@ -26,4 +26,36 @@ public class PostEntity {
     @OneToMany (mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("displayOrder ASC")
     private List<PostMediaEntity> mediaList = new ArrayList<>();
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(UUID authId) {
+        this.authId = authId;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public List<PostMediaEntity> getMediaList() {
+        return mediaList;
+    }
+
+    public void setMediaList(List<PostMediaEntity> mediaList) {
+        this.mediaList = mediaList;
+    }
 }

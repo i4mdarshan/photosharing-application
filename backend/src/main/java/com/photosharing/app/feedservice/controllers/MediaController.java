@@ -1,6 +1,6 @@
 package com.photosharing.app.feedservice.controllers;
 
-import com.photosharing.app.feedservice.services.MediaService;
+import com.photosharing.app.feedservice.service.MediaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.photosharing.app.feedservice.services;
+package com.photosharing.app.feedservice.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
