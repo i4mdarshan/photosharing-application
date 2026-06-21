@@ -58,4 +58,12 @@ public class PostEntity {
     public void setMediaList(List<PostMediaEntity> mediaList) {
         this.mediaList = mediaList;
     }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

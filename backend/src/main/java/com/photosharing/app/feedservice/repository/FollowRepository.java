@@ -5,10 +5,12 @@ import com.photosharing.app.feedservice.entity.FollowId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface FollowRepository extends JpaRepository<FollowEntity, FollowId> {
 
 
+    List<UUID> findFollowersIdByFolloweeId(UUID uuid);
 }

@@ -4,6 +4,8 @@ import com.photosharing.app.feedservice.dto.CreatePostRequest;
 import com.photosharing.app.feedservice.entity.PostEntity;
 import com.photosharing.app.feedservice.entity.PostMediaEntity;
 import com.photosharing.app.feedservice.repository.PostRepository;
+import io.awspring.cloud.sqs.operations.SqsTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +17,16 @@ import java.util.UUID;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    //private final ApplicationEventPublisher eventPublisher;
+    private final SqsTemplate sqsTemplate;
 
-    public PostService(PostRepository postRepository, ApplicationEventPublisher eventPublisher){
+    @Value("${aws.sqs.queue-name}")
+    private String queueName;
+
+    public PostService(PostRepository postRepository, ApplicationEventPublisher eventPublisher, SqsTemplate sqsTemplate){
         this.postRepository = postRepository;
-        this.eventPublisher = eventPublisher;
+        //this.eventPublisher = eventPublisher;
+        this.sqsTemplate = sqsTemplate;
 
     }
 
@@ -44,10 +51,11 @@ public class PostService {
 
         PostEntity savedPost = postRepository.save(post);
 
-        eventPublisher.publishEvent(new PostCreatedEvent(savedPost.getId(), savedPost.getAuthId()));
+        //eventPublisher.publishEvent(new PostCreatedEvent(savedPost.getId(), savedPost.getAuthId()));
+        sqsTemplate.send(queueName, new PostCreatedEvent(savedPost.getId(), savedPost.getAuthId(), savedPost.getCreatedAt().toEpochMilli()));
 
         return savedPost.getId();
     }
 
-    public record PostCreatedEvent(UUID postId, UUID authorId){}
+    public record PostCreatedEvent(UUID postId, UUID authorId, long timestamp){}
 }
