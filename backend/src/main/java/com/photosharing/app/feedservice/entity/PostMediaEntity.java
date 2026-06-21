@@ -1,6 +1,7 @@
 package com.photosharing.app.feedservice.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class PostMediaEntity {
     @Column(name = "display_order", nullable = false)
     private Integer displayOrder;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     public void setId(UUID id) {
@@ -51,5 +52,29 @@ public class PostMediaEntity {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public PostEntity getPost() {
+        return post;
+    }
+
+    public String getMediaURL() {
+        return mediaURL;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 }

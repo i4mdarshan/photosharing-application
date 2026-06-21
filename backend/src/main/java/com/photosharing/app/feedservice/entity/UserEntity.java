@@ -1,6 +1,8 @@
 package com.photosharing.app.feedservice.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -20,7 +22,8 @@ public class UserEntity {
     @Column(name="profile_picture_url")
     private String profilePictureUrl;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 
     public UUID getId() {

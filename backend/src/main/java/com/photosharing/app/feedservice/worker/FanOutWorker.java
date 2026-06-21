@@ -2,6 +2,7 @@ package com.photosharing.app.feedservice.worker;
 
 import com.photosharing.app.feedservice.repository.FollowRepository;
 import com.photosharing.app.feedservice.service.PostService;
+import io.awspring.cloud.sqs.annotation.SqsListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class FanOutWorker {
         this.redisTemplate = redisTemplate;
     }
 
+    @SqsListener("${spring.aws.sqs.queue-name}")
     public void processPostCreatedEvent(PostService.PostCreatedEvent event){
 
         List<UUID> followers = followRepository.findFollowerIdsByFolloweeId(event.authorId());

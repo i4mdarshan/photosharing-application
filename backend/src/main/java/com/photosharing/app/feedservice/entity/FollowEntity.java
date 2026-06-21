@@ -1,6 +1,7 @@
 package com.photosharing.app.feedservice.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -18,7 +19,8 @@ public class FollowEntity {
     @Column(name = "followeeId")
     private UUID followeeId;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 
     public UUID getFollowerId() {

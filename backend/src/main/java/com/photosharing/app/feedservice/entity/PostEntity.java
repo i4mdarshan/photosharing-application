@@ -1,6 +1,7 @@
 package com.photosharing.app.feedservice.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class PostEntity {
 
     private String caption;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @OneToMany (mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
