@@ -23,7 +23,7 @@ public class FanOutWorker {
 
     public void processPostCreatedEvent(PostService.PostCreatedEvent event){
 
-        List<UUID> followers = followRepository.findFollowersIdByFolloweeId(event.authorId());
+        List<UUID> followers = followRepository.findFollowerIdsByFolloweeId(event.authorId());
 
         // Skip massive fan-out for celebrities
         if (followers.size() > CELEBRITY_THRESHOLD){
