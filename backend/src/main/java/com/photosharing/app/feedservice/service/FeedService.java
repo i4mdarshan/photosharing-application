@@ -1,5 +1,7 @@
 package com.photosharing.app.feedservice.service;
 
+import com.photosharing.app.feedservice.dto.MediaItemDto;
+import com.photosharing.app.feedservice.dto.PostResponseDto;
 import com.photosharing.app.feedservice.entity.PostEntity;
 import com.photosharing.app.feedservice.repository.PostRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,7 +23,7 @@ public class FeedService {
         this.postRepository = postRepository;
     }
 
-    public List<PostEntity> getHomeFeed(UUID userId, long cursorTimeStamp, int limit){
+    public List<PostResponseDto> getHomeFeed(UUID userId, long cursorTimeStamp, int limit){
 
         String inboxKey = "feed:inbox:" + userId;
 
@@ -39,6 +41,26 @@ public class FeedService {
 
         return posts.stream()
                 .sorted((p1, p2) -> p2.getCreatedAt().compareTo(p1.getCreatedAt()))
+                .map(this::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+
+    private PostResponseDto mapToDto(PostEntity post) {
+        List<MediaItemDto> mediaDtos = post.getMediaList().stream()
+                .map(media -> new MediaItemDto(
+                        media.getMediaURL(),
+                        media.getMediaType(),
+                        media.getDisplayOrder()
+                ))
+                .collect(Collectors.toList());
+
+        return new PostResponseDto(
+                post.getId(),
+                post.getAuthId(),
+                post.getCaption(),
+                post.getCreatedAt(),
+                mediaDtos
+        );
     }
 }

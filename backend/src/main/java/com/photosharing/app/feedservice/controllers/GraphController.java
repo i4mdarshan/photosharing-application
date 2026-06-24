@@ -2,13 +2,11 @@ package com.photosharing.app.feedservice.controllers;
 
 import com.photosharing.app.feedservice.service.GraphService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-
+@RestController
+@RequestMapping("/users")
 public class GraphController {
 
     private final GraphService graphService;
